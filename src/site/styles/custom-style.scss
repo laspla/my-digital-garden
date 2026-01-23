@@ -25,9 +25,10 @@ img {
   pointer-events: none;
 }
 
-/* [Grid Callout - 이중 안전장치 버전] */
+/* [N-Column Auto Layout] */
+/* 이미지가 3개면 3등분, 4개면 4등분으로 무조건 한 줄에 맞춥니다 */
 
-/* 1. 인용구 박스 껍데기 설정 */
+/* 1. 인용구 박스 껍데기 */
 .callout[data-callout="grid"] {
     background: transparent !important;
     border: none !important;
@@ -37,31 +38,42 @@ img {
 }
 .callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. ★핵심 기술: 이중 격자(Double Grid)★ */
-/* 바깥 상자(.callout-content)와 안쪽 문단(p) 모두에게 '격자 명령'을 내립니다. */
-/* 이렇게 하면 이미지가 어디에 숨어 있든 무조건 격자 레이아웃이 적용됩니다. */
-.callout[data-callout="grid"] .callout-content,
-.callout[data-callout="grid"] .callout-content p {
-    display: grid !important;
-    /* 카드 너비 최적화: 최소 280px, 공간 남으면 늘어남 */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 20px !important;       /* 카드 사이 간격 */
-    align-items: start !important; /* 위쪽 정렬 */
-    margin: 0 !important;
+/* 2. 한 줄 정렬의 핵심 (Flexbox) */
+.callout[data-callout="grid"] .callout-content {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* ★중요: 절대 줄바꿈 하지 마라★ */
+    gap: 15px !important;         /* 사이 간격 */
+    align-items: stretch !important; /* 높이 맞추기 */
     width: 100% !important;
 }
 
-/* 3. 이미지 카드 디자인 */
+/* 3. 문단(p)을 '칼럼'으로 변신시키기 */
+/* 엔터 쳐서 생긴 p태그들이 공평하게 공간을 나눠가집니다 (flex: 1) */
+.callout[data-callout="grid"] .callout-content p {
+    display: block !important;
+    flex: 1 1 0px !important;     /* 무조건 1/N 크기로 공평하게 나눔 */
+    min-width: 0 !important;      /* 내용물이 커도 강제로 줄임 (깨짐 방지) */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 4. 이미지 스타일 */
 .callout[data-callout="grid"] img {
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;      /* 높이를 꽉 채움 */
+    object-fit: cover !important; /* 비율 유지하며 꽉 채움 */
     display: block !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
-    margin: 0 !important;
 }
 
-/* 4. 혹시 모를 줄바꿈 태그(<br>) 숨기기 */
-.callout[data-callout="grid"] br {
-    display: none !important;
+/* 5. 모바일 최적화 (스마트폰에서는 한 줄에 다 넣으면 너무 작아짐) */
+@media (max-width: 768px) {
+    .callout[data-callout="grid"] .callout-content {
+        flex-wrap: wrap !important; /* 모바일에서는 줄바꿈 허용 */
+    }
+    .callout[data-callout="grid"] .callout-content p {
+        flex: 1 1 100% !important;  /* 모바일에서는 크게 1개씩 보기 */
+        /* 만약 모바일에서도 2개씩 보고 싶다면 위 100%를 45%로 바꾸세요 */
+    }
 }
