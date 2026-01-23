@@ -25,43 +25,50 @@ img {
   pointer-events: none;
 }
 
-/* [Callout Grid System] */
-/* '> [!grid]' 라고 쓴 인용구 박스를 타겟팅 */
+/* [Callout Grid System - Final Fix] */
+
+/* 1. 인용구 박스(grid) 자체 설정 */
 .callout[data-callout="grid"] {
-    background: transparent !important; /* 배경 투명하게 */
-    border: none !important;            /* 테두리 없애기 */
-    box-shadow: none !important;        /* 그림자 없애기 */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
-/* 인용구 제목(Grid라는 글자) 숨기기 */
+/* 2. 제목 숨기기 */
 .callout[data-callout="grid"] .callout-title {
     display: none !important;
 }
 
-/* 내용물 가로 정렬 */
-.callout[data-callout="grid"] .callout-content {
+/* 3. 내용물 정렬 (여기가 핵심!) 
+   - callout-content 바로 아래에 이미지가 있든, p태그로 감싸져 있든 모두 Flex 적용
+*/
+.callout[data-callout="grid"] .callout-content,
+.callout[data-callout="grid"] .callout-content > p {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 10px !important;
-    justify-content: center; /* 가운데 정렬 */
+    justify-content: center;
     align-items: center;
+    margin: 0 !important; /* 불필요한 여백 제거 */
 }
 
-/* 이미지 크기 조절 */
-.callout[data-callout="grid"] .callout-content img,
-.callout[data-callout="grid"] .callout-content a {
-    width: 30% !important;   /* 한 줄에 3개 (모바일은 아래 미디어쿼리로 조정) */
-    min-width: 150px !important;
-    flex-grow: 1;            /* 빈 공간 채우기 */
+/* 4. 이미지 크기 및 스타일 강제 조정 */
+.callout[data-callout="grid"] img,
+.callout[data-callout="grid"] a {
+    width: 30% !important;        /* PC: 한 줄에 3개 */
+    min-width: 150px !important;  /* 최소 너비 확보 */
+    flex-grow: 1;                 /* 빈 공간 채우기 */
+    object-fit: cover !important;
     margin: 0 !important;
+    display: block !important;    /* 인라인 속성 제거 */
 }
 
-/* 모바일 최적화 */
+/* 5. 모바일 최적화 (화면 좁을 때) */
 @media (max-width: 600px) {
-    .callout[data-callout="grid"] .callout-content img,
-    .callout[data-callout="grid"] .callout-content a {
-        width: 45% !important; /* 모바일은 2개씩 */
+    .callout[data-callout="grid"] img,
+    .callout[data-callout="grid"] a {
+        width: 45% !important;    /* 모바일: 한 줄에 2개 */
     }
 }
