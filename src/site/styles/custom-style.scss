@@ -25,19 +25,37 @@ img {
   pointer-events: none;
 }
 
-/* [Grid Callout - 이중 안전장치 버전 (Rounded)] */
+/* ==========================================================
+   1. [전체 디자인] 모든 이미지 꾸미기
+   ========================================================== */
+/* 페이지에 있는 모든 이미지(img)에 적용됩니다 */
+img {
+    border-radius: 12px !important;      /* 모서리 둥글게 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important; /* 그림자 */
+    max-width: 100% !important;          /* 화면 밖으로 넘침 방지 */
+    height: auto !important;             /* 비율 유지 */
+    object-fit: contain !important;      /* 찌그러짐 방지 */
+    
+    /* 혹시 모를 간섭 제거 */
+    margin-block: 1rem;                  /* 위아래 적당한 여백 */
+}
 
-/* 1. 인용구 박스 껍데기 설정 */
+/* ==========================================================
+   2. [배치 담당] Grid Callout (이중 안전장치 버전)
+   ========================================================== */
+/* 여기는 '디자인'은 건드리지 않고 '위치(Layout)'만 잡습니다 */
+
+/* 인용구 박스 껍데기 설정 */
 .callout[data-callout="grid"] {
     background: transparent !important;
     border: none !important;
-    box-shadow: none !important;
+    box-shadow: none !important; /* 인용구 자체의 그림자는 제거 */
     margin: 20px 0 !important;
     padding: 0 !important;
 }
 .callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. ★핵심 기술: 이중 격자(Double Grid)★ */
+/* ★핵심 기술: 이중 격자(Double Grid)★ */
 /* 바깥 상자(.callout-content)와 안쪽 문단(p) 모두에게 '격자 명령'을 내립니다. */
 .callout[data-callout="grid"] .callout-content,
 .callout[data-callout="grid"] .callout-content p {
@@ -50,23 +68,14 @@ img {
     width: 100% !important;
 }
 
-/* 3. 이미지 카드 디자인 (둥근 모서리 강화) */
+/* 그리드 안의 이미지 설정 (전체 디자인을 상속받되, 배치 관련만 재정의) */
 .callout[data-callout="grid"] img {
-    width: 100% !important;
-    height: auto !important;
+    width: 100% !important;      /* 그리드 칸에 꽉 차게 */
     display: block !important;
-    
-    /* ▼▼ 모서리 둥글게 설정 (숫자를 키우면 더 둥글어집니다) ▼▼ */
-    border-radius: 12px !important; 
-    
-    /* 이미지가 둥근 모서리 밖으로 삐져나가지 않게 자름 */
-    overflow: hidden !important;
-    
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
-    margin: 0 !important;
+    margin: 0 !important;        /* 그리드 안에서는 여백 제거 (grid gap이 대신함) */
 }
 
-/* 4. 혹시 모를 줄바꿈 태그(<br>) 숨기기 */
+/* 혹시 모를 줄바꿈 태그(<br>) 숨기기 */
 .callout[data-callout="grid"] br {
     display: none !important;
 }
