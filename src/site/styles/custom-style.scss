@@ -25,50 +25,50 @@ img {
   pointer-events: none;
 }
 
-/* [Callout Grid System - Final Fix] */
+/* [Grid Callout - 이중 잠금 버전] */
 
-/* 1. 인용구 박스(grid) 자체 설정 */
+/* 1. 가장 바깥 박스 (인용구) */
 .callout[data-callout="grid"] {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
+    padding: 0 !important;
+    margin: 1rem 0 !important;
+}
+/* 제목 숨김 */
+.callout[data-callout="grid"] .callout-title { display: none !important; }
+
+/* 2. 내용물 박스 (여기가 핵심!) */
+/* 내용물 박스 자체도 Flex + 그 안의 문단(p)도 Flex로 만듭니다 */
+.callout[data-callout="grid"] .callout-content, 
+.callout[data-callout="grid"] .callout-content p {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    /* 문단 태그가 한 줄을 다 차지하지 못하게 강제함 */
+    width: auto !important; 
     margin: 0 !important;
     padding: 0 !important;
 }
 
-/* 2. 제목 숨기기 */
-.callout[data-callout="grid"] .callout-title {
-    display: none !important;
-}
-
-/* 3. 내용물 정렬 (여기가 핵심!) 
-   - callout-content 바로 아래에 이미지가 있든, p태그로 감싸져 있든 모두 Flex 적용
-*/
-.callout[data-callout="grid"] .callout-content,
-.callout[data-callout="grid"] .callout-content > p {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    justify-content: center;
-    align-items: center;
-    margin: 0 !important; /* 불필요한 여백 제거 */
-}
-
-/* 4. 이미지 크기 및 스타일 강제 조정 */
-.callout[data-callout="grid"] img,
-.callout[data-callout="grid"] a {
-    width: 30% !important;        /* PC: 한 줄에 3개 */
-    min-width: 150px !important;  /* 최소 너비 확보 */
-    flex-grow: 1;                 /* 빈 공간 채우기 */
+/* 3. 이미지 자체 크기 조절 */
+/* 문단(p) 안에 있든, 링크(a) 안에 있든, 그냥 있든 다 적용 */
+.callout[data-callout="grid"] img {
+    flex: 0 1 30% !important;   /* 너비 30% */
+    min-width: 150px !important; 
+    width: 30% !important;      /* 강제 너비 */
+    height: auto !important;
     object-fit: cover !important;
     margin: 0 !important;
-    display: block !important;    /* 인라인 속성 제거 */
 }
 
-/* 5. 모바일 최적화 (화면 좁을 때) */
+/* 4. 모바일 최적화 */
 @media (max-width: 600px) {
-    .callout[data-callout="grid"] img,
-    .callout[data-callout="grid"] a {
-        width: 45% !important;    /* 모바일: 한 줄에 2개 */
+    .callout[data-callout="grid"] img {
+        flex: 0 1 45% !important; /* 모바일은 2개씩 */
+        width: 45% !important;
     }
 }
