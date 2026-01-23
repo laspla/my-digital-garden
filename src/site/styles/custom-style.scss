@@ -25,8 +25,8 @@ img {
   pointer-events: none;
 }
 
-/* [Super Force 1-Line Grid] */
-/* 화면 폭과 상관없이 무조건 한 줄에 모든 이미지를 N등분하여 배치 */
+/* [Compact 1-Line Gallery] */
+/* 화면을 억지로 채우지 않고, 이미지 크기에 맞춰 깔끔하게 정렬 */
 
 /* 1. 인용구 껍데기 초기화 */
 .callout[data-callout="grid"] {
@@ -38,32 +38,38 @@ img {
 }
 .callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. ★핵심 기술: Grid Auto Flow Column★ */
-/* "가로로만 계속 늘어나라(column)" + "크기는 0까지 줄어들 수 있다(minmax 0)" */
+/* 2. 컴팩트 정렬 설정 (핵심) */
 .callout[data-callout="grid"] .callout-content {
-    display: grid !important;
-    grid-auto-flow: column !important;      /* 무조건 옆으로 흐름 (1줄 보장) */
-    grid-auto-columns: minmax(0, 1fr) !important; /* ★비법: 공간 없으면 0px까지도 줄어듦 (N등분) */
-    gap: 10px !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;       /* 줄바꿈 금지 (무조건 1줄) */
+    gap: 15px !important;               /* 카드 사이 간격 15px 고정 */
+    
+    /* ★중요: justify-content */
+    /* center: 가운데 정렬 (추천) */
+    /* flex-start: 왼쪽 정렬 (원하시면 이걸로 바꾸세요) */
+    justify-content: center !important; 
+    
+    align-items: center !important;
     width: 100% !important;
-    overflow: hidden !important; /* 튀어나오는 것 잘라냄 */
 }
 
-/* 3. 방해꾼 문단(<p>) 제거 기술 */
-/* 문단 태그를 투명하게 만들어서 Grid가 이미지를 직접 통제하게 함 */
+/* 3. 문단(p) 무시하기 */
 .callout[data-callout="grid"] .callout-content p {
-    display: contents !important; 
+    display: contents !important;
 }
 
-/* 4. 이미지 스타일 강제 조정 */
+/* 4. 이미지 크기 지능형 조절 */
 .callout[data-callout="grid"] img {
-    width: 100% !important;
-    height: auto !important;     /* 비율 유지하며 높이 자동 조절 */
-    object-fit: contain !important; /* 이미지 전체가 다 보이게 함 (잘림 방지) */
+    /* flex: 0(안 커짐) 1(필요하면 줄어듦) auto(본래 크기 유지) */
+    flex: 0 1 auto !important;  
+    
+    width: auto !important;     /* 이미지 본래 해상도 비율 유지 */
+    max-width: 100% !important; /* 너무 크면 화면에 맞춤 */
+    height: auto !important;
+    
+    object-fit: contain !important;
     display: block !important;
     margin: 0 !important;
-    border-radius: 4px !important;
-    min-width: 0 !important;     /* ★중요: 이게 없으면 이미지가 안 줄어듦 */
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
 }
-
-/* 5. 모바일/PC 구분 없음 (항상 1줄 N등분) */
