@@ -75,5 +75,15 @@
       {% include imp %}
     {% endfor %}
     {%include "components/lucideIcons.njk"%}
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // 페이지 전체에서 ~={색깔}내용=~ 패턴을 찾습니다.
+          document.body.innerHTML = document.body.innerHTML.replace(
+            /~=\{(.*?)\}(.*?)=~/g, 
+            '<span style="color: $1; ">$2</span>'
+          );
+        });
+      </script>
     </body>
   </html>
