@@ -79,9 +79,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% if settings.dgShowBacklinks === true or settings.dgShowLocalGraph === true or settings.dgShowToc === true%}
       {% if page.url != '/' %}
         {% include "components/sidebar.njk" %}
-      {% endif %}
     {% endif %}
-
     {% if settings.dgLinkPreview === true %}
       {%include "components/linkPreview.njk"%}
     {% endif %}
