@@ -15,8 +15,7 @@
     {% if settings.dgShowFileTree !== true %}
       {%include "components/navbar.njk"%}
     {%else%}
-      {% if page.url != '/' %}
-         {% include "components/filetree.njk" %} 
+      {%include "components/filetree.njk"%}
     {% endif %}
     {% if settings.dgEnableSearch === true %}
       {%include "components/searchContainer.njk"%}
