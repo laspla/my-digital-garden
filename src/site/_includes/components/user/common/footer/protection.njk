@@ -1,0 +1,15 @@
+<script>
+/* 우클릭 방지 및 개발자 도구 차단 스크립트 */
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+document.onkeydown = function(e) {
+    // F12 키 방지
+    if(e.keyCode == 123) { return false; }
+    // Ctrl+Shift+I (개발자 도구) 방지
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+    // Ctrl+Shift+C (요소 검사) 방지
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; }
+    // Ctrl+U (소스 보기) 방지
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+}
+</script>
