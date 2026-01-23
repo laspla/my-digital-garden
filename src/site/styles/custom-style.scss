@@ -25,34 +25,39 @@ img {
   pointer-events: none;
 }
 
-/* [무조건 작동하는 갤러리 그리드] */
-.gallery-grid {
-    display: grid !important;
-    /* 최소 250px 크기 확보, 공간 남으면 옆으로 늘어남 (자동 반응형) */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-    gap: 15px !important;       /* 이미지 사이 간격 */
-    align-items: start !important; /* 세로 위쪽 정렬 (계단 현상 방지) */
-    width: 100% !important;
+/* [Real Estate Grid System] */
+
+/* 1. 인용구 박스 설정 */
+.callout[data-callout="grid"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     margin: 20px 0 !important;
-}
-
-/* 그리드 안의 방해꾼들(p태그, 링크, 빈공간) 강제 초기화 */
-.gallery-grid > *, 
-.gallery-grid p, 
-.gallery-grid a {
-    display: block !important;
-    width: 100% !important;
-    margin: 0 !important;
     padding: 0 !important;
-    min-width: 0 !important; /* 넘침 방지 */
+}
+.callout[data-callout="grid"] .callout-title { display: none !important; }
+
+/* 2. 그리드 레이아웃 (핵심!) */
+.callout[data-callout="grid"] .callout-content {
+    display: grid !important;
+    /* 카드가 너무 작아지지 않게 최소 280px 확보 (부동산 카드 최적화) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;       /* 카드 사이 간격 */
+    align-items: start !important;
 }
 
-/* 이미지 스타일 */
-.gallery-grid img {
+/* 3. ★방해꾼 제거★ (Magic Code) */
+/* 이미지들을 감싸고 있는 쓸데없는 문단 태그(p)를 투명인간 취급합니다 */
+.callout[data-callout="grid"] .callout-content p {
+    display: contents !important;
+}
+
+/* 4. 이미지 스타일 */
+.callout[data-callout="grid"] img {
     width: 100% !important;
     height: auto !important;
-    object-fit: contain !important; /* 이미지 비율 유지 */
     display: block !important;
-    border-radius: 8px; /* 모서리 살짝 둥글게 */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* 깔끔한 그림자 효과 */
+    border-radius: 8px !important;  /* 둥근 모서리 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important; /* 그림자 효과 */
+    margin: 0 !important;
 }
