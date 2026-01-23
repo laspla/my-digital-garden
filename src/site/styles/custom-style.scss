@@ -25,9 +25,9 @@ img {
   pointer-events: none;
 }
 
-/* [Real Estate Grid System] */
+/* [Grid Callout - 이중 안전장치 버전] */
 
-/* 1. 인용구 박스 설정 */
+/* 1. 인용구 박스 껍데기 설정 */
 .callout[data-callout="grid"] {
     background: transparent !important;
     border: none !important;
@@ -37,27 +37,31 @@ img {
 }
 .callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. 그리드 레이아웃 (핵심!) */
-.callout[data-callout="grid"] .callout-content {
+/* 2. ★핵심 기술: 이중 격자(Double Grid)★ */
+/* 바깥 상자(.callout-content)와 안쪽 문단(p) 모두에게 '격자 명령'을 내립니다. */
+/* 이렇게 하면 이미지가 어디에 숨어 있든 무조건 격자 레이아웃이 적용됩니다. */
+.callout[data-callout="grid"] .callout-content,
+.callout[data-callout="grid"] .callout-content p {
     display: grid !important;
-    /* 카드가 너무 작아지지 않게 최소 280px 확보 (부동산 카드 최적화) */
+    /* 카드 너비 최적화: 최소 280px, 공간 남으면 늘어남 */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
     gap: 20px !important;       /* 카드 사이 간격 */
-    align-items: start !important;
+    align-items: start !important; /* 위쪽 정렬 */
+    margin: 0 !important;
+    width: 100% !important;
 }
 
-/* 3. ★방해꾼 제거★ (Magic Code) */
-/* 이미지들을 감싸고 있는 쓸데없는 문단 태그(p)를 투명인간 취급합니다 */
-.callout[data-callout="grid"] .callout-content p {
-    display: contents !important;
-}
-
-/* 4. 이미지 스타일 */
+/* 3. 이미지 카드 디자인 */
 .callout[data-callout="grid"] img {
     width: 100% !important;
     height: auto !important;
     display: block !important;
-    border-radius: 8px !important;  /* 둥근 모서리 */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important; /* 그림자 효과 */
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
     margin: 0 !important;
+}
+
+/* 4. 혹시 모를 줄바꿈 태그(<br>) 숨기기 */
+.callout[data-callout="grid"] br {
+    display: none !important;
 }
