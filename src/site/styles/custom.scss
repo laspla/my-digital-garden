@@ -1,32 +1,19 @@
-/* Pagefind 검색창 전체 컨테이너 */
-.pagefind-ui__form {
-    &::before {
-        background-color: transparent !important; /* 기본 아이콘 배경 제거 */
-    }
+/* 1. 검색창 껍데기 (입력칸) */
+input.pagefind-ui__search-input {
+    background-color: white !important;   /* 배경색 */
+    border: 2px solid #ddd !important;    /* 테두리 색 */
+    border-radius: 30px !important;       /* 둥근 모서리 */
+    padding: 10px 20px 10px 45px !important; /* 내부 여백 */
+    color: black !important;              /* 글자색 */
 }
 
-/* 검색 입력창 본체 꾸미기 */
-.pagefind-ui__search-input {
-    background-color: var(--background-secondary) !important; /* 배경색 */
-    color: var(--text-normal) !important;       /* 글자색 */
-    border: 1px solid var(--background-modifier-border) !important; /* 테두리 */
-    border-radius: 15px !important;             /* 둥글게 */
-    padding: 10px 15px 10px 40px !important;    /* 여백 (아이콘 자리 확보) */
-    font-size: 0.9rem !important;
-    font-weight: 500 !important;
-    
-    /* 포커스 되었을 때 (클릭했을 때) */
-    &:focus {
-        border-color: var(--interactive-accent) !important; /* 포인트 컬러로 테두리 변경 */
-        box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb), 0.2) !important;
-        outline: none !important;
-    }
+/* 2. 검색창 눌렀을 때 (포커스) */
+input.pagefind-ui__search-input:focus {
+    border-color: #7b68ee !important;     /* 누르면 보라색 테두리 */
+    outline: none !important;
 }
 
-/* 검색 결과창(팝업) 스타일 (필요시 사용) */
-.pagefind-ui__drawer {
-    background-color: var(--background-primary) !important;
-    border: 1px solid var(--background-modifier-border) !important;
-    border-radius: 0 0 10px 10px !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+/* 3. 검색 아이콘 (돋보기) 위치 조정 */
+.pagefind-ui__search-clear {
+    background-color: transparent !important;
 }
