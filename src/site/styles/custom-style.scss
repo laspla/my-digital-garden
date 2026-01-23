@@ -24,3 +24,46 @@ img {
   -webkit-user-drag: none;
   pointer-events: none;
 }
+
+/* ==========================================================
+   Web Image Grid (Digital Garden Optimized)
+   Usage: frontmatter에 'cssclasses: img-grid' 추가
+   ========================================================== */
+
+/* [핵심 수정 사항]
+   1. .markdown-preview-section 삭제 (웹에는 없는 클래스)
+   2. .image-embed -> img 태그로 변경 (웹에서는 이미지가 div로 감싸져 있지 않음)
+   3. :has(img + img) 사용 (이미지가 연속 2개 이상 있는 문단만 선택)
+*/
+
+/* [PC/태블릿 기본 설정] */
+.img-grid p:has(img + img) {
+    display: grid;
+    /* 화면 너비에 따라 자동 조절 (최소 120px) */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;              /* 간격을 조금 더 넓게 10px로 조정 (웹에서 보기 좋음) */
+    align-items: center;    /* 세로 중앙 정렬 */
+    margin-block: 1rem;     /* 위아래 여백 */
+}
+
+/* [모바일 전용 설정] 화면 600px 이하 */
+@media (max-width: 600px) {
+    .img-grid p:has(img + img) {
+        /* 모바일에서는 이미지가 너무 작아지지 않게 최소 크기 확보 */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+}
+
+/* [이미지 스타일 정리] */
+.img-grid p:has(img + img) img {
+    width: 100% !important;
+    height: 100% !important; /* 높이를 꽉 채워서 줄 맞춤 */
+    object-fit: cover;       /* 이미지가 찌그러지지 않고 칸에 꽉 차게 (contain은 여백 생김) */
+    border-radius: 8px;      /* 모서리 둥글게 (선택사항) */
+    margin: 0 !important;    /* 불필요한 여백 제거 */
+}
+
+/* [줄바꿈 태그 숨김] - 그리드 깨짐 방지 */
+.img-grid p:has(img + img) > br {
+    display: none;
+}
