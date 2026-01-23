@@ -25,7 +25,7 @@ img {
   pointer-events: none;
 }
 
-/* [Grid Callout - 이중 안전장치 버전] */
+/* [Grid Callout - 이중 안전장치 버전 (Rounded)] */
 
 /* 1. 인용구 박스 껍데기 설정 */
 .callout[data-callout="grid"] {
@@ -39,11 +39,10 @@ img {
 
 /* 2. ★핵심 기술: 이중 격자(Double Grid)★ */
 /* 바깥 상자(.callout-content)와 안쪽 문단(p) 모두에게 '격자 명령'을 내립니다. */
-/* 이렇게 하면 이미지가 어디에 숨어 있든 무조건 격자 레이아웃이 적용됩니다. */
 .callout[data-callout="grid"] .callout-content,
 .callout[data-callout="grid"] .callout-content p {
     display: grid !important;
-    /* 카드 너비 최적화: 최소 280px, 공간 남으면 늘어남 */
+    /* 카드 최소 너비 280px (화면이 좁으면 줄바꿈 됨) */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
     gap: 20px !important;       /* 카드 사이 간격 */
     align-items: start !important; /* 위쪽 정렬 */
@@ -51,12 +50,18 @@ img {
     width: 100% !important;
 }
 
-/* 3. 이미지 카드 디자인 */
+/* 3. 이미지 카드 디자인 (둥근 모서리 강화) */
 .callout[data-callout="grid"] img {
     width: 100% !important;
     height: auto !important;
     display: block !important;
-    border-radius: 8px !important;
+    
+    /* ▼▼ 모서리 둥글게 설정 (숫자를 키우면 더 둥글어집니다) ▼▼ */
+    border-radius: 12px !important; 
+    
+    /* 이미지가 둥근 모서리 밖으로 삐져나가지 않게 자름 */
+    overflow: hidden !important;
+    
     box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
     margin: 0 !important;
 }
