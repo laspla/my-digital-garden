@@ -25,10 +25,9 @@ img {
   pointer-events: none;
 }
 
-/* [Compact 1-Line Gallery] */
-/* 화면을 억지로 채우지 않고, 이미지 크기에 맞춰 깔끔하게 정렬 */
+/* [Grid Callout - 이중 안전장치 버전] */
 
-/* 1. 인용구 껍데기 초기화 */
+/* 1. 인용구 박스 껍데기 설정 */
 .callout[data-callout="grid"] {
     background: transparent !important;
     border: none !important;
@@ -38,38 +37,31 @@ img {
 }
 .callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. 컴팩트 정렬 설정 (핵심) */
-.callout[data-callout="grid"] .callout-content {
-    display: flex !important;
-    flex-wrap: nowrap !important;       /* 줄바꿈 금지 (무조건 1줄) */
-    gap: 5px !important;               /* 카드 사이 간격 5px 고정 */
-    
-    /* ★중요: justify-content */
-    /* center: 가운데 정렬 (추천) */
-    /* flex-start: 왼쪽 정렬 (원하시면 이걸로 바꾸세요) */
-    justify-content: center !important; 
-    
-    align-items: center !important;
+/* 2. ★핵심 기술: 이중 격자(Double Grid)★ */
+/* 바깥 상자(.callout-content)와 안쪽 문단(p) 모두에게 '격자 명령'을 내립니다. */
+/* 이렇게 하면 이미지가 어디에 숨어 있든 무조건 격자 레이아웃이 적용됩니다. */
+.callout[data-callout="grid"] .callout-content,
+.callout[data-callout="grid"] .callout-content p {
+    display: grid !important;
+    /* 카드 너비 최적화: 최소 280px, 공간 남으면 늘어남 */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;       /* 카드 사이 간격 */
+    align-items: start !important; /* 위쪽 정렬 */
+    margin: 0 !important;
     width: 100% !important;
 }
 
-/* 3. 문단(p) 무시하기 */
-.callout[data-callout="grid"] .callout-content p {
-    display: contents !important;
-}
-
-/* 4. 이미지 크기 지능형 조절 */
+/* 3. 이미지 카드 디자인 */
 .callout[data-callout="grid"] img {
-    /* flex: 0(안 커짐) 1(필요하면 줄어듦) auto(본래 크기 유지) */
-    flex: 0 1 auto !important;  
-    
-    width: auto !important;     /* 이미지 본래 해상도 비율 유지 */
-    max-width: 100% !important; /* 너무 크면 화면에 맞춤 */
+    width: 100% !important;
     height: auto !important;
-    
-    object-fit: contain !important;
     display: block !important;
-    margin: 0 !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+    margin: 0 !important;
+}
+
+/* 4. 혹시 모를 줄바꿈 태그(<br>) 숨기기 */
+.callout[data-callout="grid"] br {
+    display: none !important;
 }
