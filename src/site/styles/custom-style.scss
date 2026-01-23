@@ -25,9 +25,11 @@ img {
   pointer-events: none;
 }
 
-/* ==========================================================
-   1. [전체 디자인] 모든 이미지 꾸미기
-   ========================================================== */
+/* ==================
+이미지 그리드 적용
+================== */
+
+/* 1. [전체 디자인] 모든 이미지 꾸미기 */
 /* 페이지에 있는 모든 이미지(img)에 적용됩니다 */
 img {
     border-radius: 12px !important;      /* 모서리 둥글게 */
@@ -40,9 +42,7 @@ img {
     margin-block: 1rem;                  /* 위아래 적당한 여백 */
 }
 
-/* ==========================================================
-   2. [배치 담당] Grid Callout (이중 안전장치 버전)
-   ========================================================== */
+/* 2. [배치 담당] Grid Callout (이중 안전장치 버전) */
 /* 여기는 '디자인'은 건드리지 않고 '위치(Layout)'만 잡습니다 */
 
 /* 인용구 박스 껍데기 설정 */
@@ -80,24 +80,3 @@ img {
     display: none !important;
 }
 
-
-/* searchbox 꾸미기 */
-/* 1. 검색창 껍데기 (입력칸) */
-input.pagefind-ui__search-input {
-    background-color: white !important;   /* 배경색 */
-    border: 2px solid #ddd !important;    /* 테두리 색 */
-    border-radius: 30px !important;       /* 둥근 모서리 */
-    padding: 10px 20px 10px 45px !important; /* 내부 여백 */
-    color: black !important;              /* 글자색 */
-}
-
-/* 2. 검색창 눌렀을 때 (포커스) */
-input.pagefind-ui__search-input:focus {
-    border-color: #7b68ee !important;     /* 누르면 보라색 테두리 */
-    outline: none !important;
-}
-
-/* 3. 검색 아이콘 (돋보기) 위치 조정 */
-.pagefind-ui__search-clear {
-    background-color: transparent !important;
-}
