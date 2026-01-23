@@ -26,48 +26,33 @@ img {
 }
 
 /* ==========================================================
-   Web Image Grid (Universal Version)
-   - 일반 이미지(img)와 링크된 이미지(a > img) 모두 지원
+   SIMPLE IMAGE GRID (Flexbox Version)
    ========================================================== */
 
-/* 1. 그리드 컨테이너 설정 (p 태그) */
-/* 이미지가 연속 2개 이상 있거나, 이미지를 포함한 링크가 2개 이상일 때 작동 */
-.img-grid p:has(img + img),
-.img-grid p:has(a:has(img) + a:has(img)) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
-    align-items: center;
-    margin-block: 1rem;
+/* .img-grid 클래스가 적용된 페이지의 모든 p 태그를 검사 */
+.img-grid p {
+    display: flex !important;       /* 무조건 플렉스 박스로 변환 */
+    flex-wrap: wrap !important;     /* 공간 부족하면 다음 줄로 */
+    gap: 10px !important;           /* 이미지 사이 간격 */
+    justify-content: center;        /* 가운데 정렬 */
+    align-items: center;            /* 세로 중앙 정렬 */
 }
 
-/* 2. 그리드 아이템 설정 (직접적인 자식 요소) */
-/* p 태그 바로 아래에 있는 img 또는 a 태그를 선택 */
+/* p 태그 안의 이미지(img)와 링크(a) 강제 조정 */
 .img-grid p > img,
 .img-grid p > a {
-    width: 100% !important;
-    display: block; /* 인라인 요소 여백 제거 */
+    flex: 1 1 30% !important;       /* 너비 30%부터 시작 (한 줄에 3개 정도 들어감) */
+    min-width: 150px !important;    /* 너무 작아지면 안 됨 */
+    max-width: 100% !important;     
+    height: auto !important;
+    object-fit: cover !important;
     margin: 0 !important;
 }
 
-/* 3. 링크 안의 이미지 설정 */
-.img-grid p > a > img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-    display: block;
-    border-radius: 8px; /* 둥근 모서리 */
-}
-
-/* 4. 모바일 최적화 (600px 이하) */
+/* 모바일에서는 2개씩 보이게 조정 */
 @media (max-width: 600px) {
-    .img-grid p:has(img + img),
-    .img-grid p:has(a:has(img) + a:has(img)) {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    .img-grid p > img,
+    .img-grid p > a {
+        flex: 1 1 45% !important;   /* 모바일은 45% 너비 (한 줄에 2개) */
     }
-}
-
-/* 5. 줄바꿈 태그(<br>) 숨김 처리 */
-.img-grid p br {
-    display: none;
 }
