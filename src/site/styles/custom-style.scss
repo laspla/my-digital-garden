@@ -42,7 +42,7 @@ img {
 .callout[data-callout="grid"] .callout-content {
     display: flex !important;
     flex-wrap: nowrap !important;       /* 줄바꿈 금지 (무조건 1줄) */
-    gap: 15px !important;               /* 카드 사이 간격 15px 고정 */
+    gap: 5px !important;               /* 카드 사이 간격 5px 고정 */
     
     /* ★중요: justify-content */
     /* center: 가운데 정렬 (추천) */
