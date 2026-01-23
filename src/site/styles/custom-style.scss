@@ -26,44 +26,48 @@ img {
 }
 
 /* ==========================================================
-   Web Image Grid (Digital Garden Optimized)
-   Usage: frontmatter에 'cssclasses: img-grid' 추가
+   Web Image Grid (Universal Version)
+   - 일반 이미지(img)와 링크된 이미지(a > img) 모두 지원
    ========================================================== */
 
-/* [핵심 수정 사항]
-   1. .markdown-preview-section 삭제 (웹에는 없는 클래스)
-   2. .image-embed -> img 태그로 변경 (웹에서는 이미지가 div로 감싸져 있지 않음)
-   3. :has(img + img) 사용 (이미지가 연속 2개 이상 있는 문단만 선택)
-*/
-
-/* [PC/태블릿 기본 설정] */
-.img-grid p:has(img + img) {
+/* 1. 그리드 컨테이너 설정 (p 태그) */
+/* 이미지가 연속 2개 이상 있거나, 이미지를 포함한 링크가 2개 이상일 때 작동 */
+.img-grid p:has(img + img),
+.img-grid p:has(a:has(img) + a:has(img)) {
     display: grid;
-    /* 화면 너비에 따라 자동 조절 (최소 120px) */
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;              /* 간격을 조금 더 넓게 10px로 조정 (웹에서 보기 좋음) */
-    align-items: center;    /* 세로 중앙 정렬 */
-    margin-block: 1rem;     /* 위아래 여백 */
+    gap: 10px;
+    align-items: center;
+    margin-block: 1rem;
 }
 
-/* [모바일 전용 설정] 화면 600px 이하 */
+/* 2. 그리드 아이템 설정 (직접적인 자식 요소) */
+/* p 태그 바로 아래에 있는 img 또는 a 태그를 선택 */
+.img-grid p > img,
+.img-grid p > a {
+    width: 100% !important;
+    display: block; /* 인라인 요소 여백 제거 */
+    margin: 0 !important;
+}
+
+/* 3. 링크 안의 이미지 설정 */
+.img-grid p > a > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px; /* 둥근 모서리 */
+}
+
+/* 4. 모바일 최적화 (600px 이하) */
 @media (max-width: 600px) {
-    .img-grid p:has(img + img) {
-        /* 모바일에서는 이미지가 너무 작아지지 않게 최소 크기 확보 */
+    .img-grid p:has(img + img),
+    .img-grid p:has(a:has(img) + a:has(img)) {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
 }
 
-/* [이미지 스타일 정리] */
-.img-grid p:has(img + img) img {
-    width: 100% !important;
-    height: 100% !important; /* 높이를 꽉 채워서 줄 맞춤 */
-    object-fit: cover;       /* 이미지가 찌그러지지 않고 칸에 꽉 차게 (contain은 여백 생김) */
-    border-radius: 8px;      /* 모서리 둥글게 (선택사항) */
-    margin: 0 !important;    /* 불필요한 여백 제거 */
-}
-
-/* [줄바꿈 태그 숨김] - 그리드 깨짐 방지 */
-.img-grid p:has(img + img) > br {
+/* 5. 줄바꿈 태그(<br>) 숨김 처리 */
+.img-grid p br {
     display: none;
 }
