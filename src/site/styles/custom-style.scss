@@ -11,3 +11,16 @@ body {
     //   color: black;
     //  }
 }
+
+/* 전체 텍스트 선택 방지 */
+body {
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* 이미지를 드래그해서 저장하는 것도 방지 */
+img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
