@@ -25,50 +25,34 @@ img {
   pointer-events: none;
 }
 
-/* [Grid Callout - 이중 잠금 버전] */
-
-/* 1. 가장 바깥 박스 (인용구) */
-.callout[data-callout="grid"] {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 1rem 0 !important;
+/* [무조건 작동하는 갤러리 그리드] */
+.gallery-grid {
+    display: grid !important;
+    /* 최소 250px 크기 확보, 공간 남으면 옆으로 늘어남 (자동 반응형) */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 15px !important;       /* 이미지 사이 간격 */
+    align-items: start !important; /* 세로 위쪽 정렬 (계단 현상 방지) */
+    width: 100% !important;
+    margin: 20px 0 !important;
 }
-/* 제목 숨김 */
-.callout[data-callout="grid"] .callout-title { display: none !important; }
 
-/* 2. 내용물 박스 (여기가 핵심!) */
-/* 내용물 박스 자체도 Flex + 그 안의 문단(p)도 Flex로 만듭니다 */
-.callout[data-callout="grid"] .callout-content, 
-.callout[data-callout="grid"] .callout-content p {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    justify-content: center !important;
-    align-items: center !important;
-    
-    /* 문단 태그가 한 줄을 다 차지하지 못하게 강제함 */
-    width: auto !important; 
+/* 그리드 안의 방해꾼들(p태그, 링크, 빈공간) 강제 초기화 */
+.gallery-grid > *, 
+.gallery-grid p, 
+.gallery-grid a {
+    display: block !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    min-width: 0 !important; /* 넘침 방지 */
 }
 
-/* 3. 이미지 자체 크기 조절 */
-/* 문단(p) 안에 있든, 링크(a) 안에 있든, 그냥 있든 다 적용 */
-.callout[data-callout="grid"] img {
-    flex: 0 1 30% !important;   /* 너비 30% */
-    min-width: 150px !important; 
-    width: 30% !important;      /* 강제 너비 */
+/* 이미지 스타일 */
+.gallery-grid img {
+    width: 100% !important;
     height: auto !important;
-    object-fit: cover !important;
-    margin: 0 !important;
-}
-
-/* 4. 모바일 최적화 */
-@media (max-width: 600px) {
-    .callout[data-callout="grid"] img {
-        flex: 0 1 45% !important; /* 모바일은 2개씩 */
-        width: 45% !important;
-    }
+    object-fit: contain !important; /* 이미지 비율 유지 */
+    display: block !important;
+    border-radius: 8px; /* 모서리 살짝 둥글게 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* 깔끔한 그림자 효과 */
 }
