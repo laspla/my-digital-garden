@@ -12,14 +12,6 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% for imp in dynamics.notes.head %}
       {% include imp %}
     {% endfor %}
-
-    // 카드링크 적용하기
-    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        microlink('.auto-card', { size: 'large' }) 
-      });
-    </script>
   </head>
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {% if settings.dgShowFileTree !== true %}no-filetree{% endif %} {% if settings.dgHomeLink === true and settings.dgShowFileTree !== true %}has-navbar{% endif %} {{meta.bodyClasses}}">
     {%include "components/notegrowthhistory.njk"%}
@@ -111,6 +103,24 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           /~=\{(.*?)\}(.*?)=~/g, 
           '<span style="color: $1; ">$2</span>'
         );
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // 본문 영역(body) 내의 모든 링크를 찾음
+        const links = document.querySelectorAll('body a');
+        
+        links.forEach(link => {
+          // 링크 텍스트에 'http'가 포함되어 있으면(즉, URL 그대로 적은 경우)
+          if (link.textContent.includes('http')) {
+             link.classList.add('auto-card'); // 클래스 추가
+          }
+        });
+
+        // 위에서 클래스가 추가된 링크들만 카드로 변환
+        microlink('.auto-card', { size: 'large' });
       });
     </script>
   </body>
