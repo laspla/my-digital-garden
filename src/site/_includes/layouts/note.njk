@@ -105,5 +105,13 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         );
       });
     </script>
+
+    // 카드링크 적용하기
+    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        microlink('.auto-card', { size: 'large' }) 
+      });
+    </script>
   </body>
 </html>
