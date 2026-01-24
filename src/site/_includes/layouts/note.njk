@@ -105,23 +105,5 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         );
       });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        // 본문 영역(body) 내의 모든 링크를 찾음
-        const links = document.querySelectorAll('body a');
-        
-        links.forEach(link => {
-          // 링크 텍스트에 'http'가 포함되어 있으면(즉, URL 그대로 적은 경우)
-          if (link.textContent.includes('http')) {
-             link.classList.add('auto-card'); // 클래스 추가
-          }
-        });
-
-        // 위에서 클래스가 추가된 링크들만 카드로 변환
-        microlink('.auto-card', { size: 'large' });
-      });
-    </script>
   </body>
 </html>
