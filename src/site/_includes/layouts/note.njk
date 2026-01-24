@@ -12,6 +12,14 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% for imp in dynamics.notes.head %}
       {% include imp %}
     {% endfor %}
+
+    // 카드링크 적용하기
+    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        microlink('.auto-card', { size: 'large' }) 
+      });
+    </script>
   </head>
   <body class="theme-{{meta.baseTheme}} markdown-preview-view markdown-rendered markdown-preview-section {% if settings.dgShowFileTree !== true %}no-filetree{% endif %} {% if settings.dgHomeLink === true and settings.dgShowFileTree !== true %}has-navbar{% endif %} {{meta.bodyClasses}}">
     {%include "components/notegrowthhistory.njk"%}
@@ -103,14 +111,6 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           /~=\{(.*?)\}(.*?)=~/g, 
           '<span style="color: $1; ">$2</span>'
         );
-      });
-    </script>
-
-    // 카드링크 적용하기
-    <script src="https://cdn.jsdelivr.net/npm/@microlink/vanilla@latest/dist/microlink.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        microlink('.auto-card', { size: 'large' }) 
       });
     </script>
   </body>
