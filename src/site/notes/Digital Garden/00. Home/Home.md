@@ -17,6 +17,3 @@
 
 **🗺️오시는 길:**
 - [서울시 서초구 서초중앙로29길 23, 102호 (반포동)](https://map.naver.com/p/entry/place/13507511?c=15.00,0,0,0,dh)
-
-
-https://zdnet.co.kr/view/?no=20251222220821
