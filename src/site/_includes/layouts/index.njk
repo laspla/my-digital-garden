@@ -76,26 +76,24 @@
     {% endfor %}
     {%include "components/lucideIcons.njk"%}
 
+      <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
       <script>
         document.addEventListener("DOMContentLoaded", function() {
-          // 페이지 전체에서 ~={색깔}내용=~ 패턴을 찾습니다.
+          // 1. 색깔 텍스트 문법 적용 (~={색깔}내용=~)
+          // 주의: 이 작업이 body를 재생성하므로 가장 먼저 실행되어야 합니다.
           document.body.innerHTML = document.body.innerHTML.replace(
             /~=\{(.*?)\}(.*?)=~/g, 
             '<span style="color: $1; ">$2</span>'
           );
+
+          // 2. 이미지 줌 기능 적용
+          // 위에서 화면이 다 그려진 뒤에 실행되어야 안전합니다.
+          mediumZoom('img', {
+            margin: 24,
+            background: '#000000e6',
+            scrollOffset: 0,
+          });
         });
       </script>
-
-      // 페이지 로드 후 이미지에 줌 기능 적용
-      <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
-      <script>
-          document.addEventListener('DOMContentLoaded', function() {
-              mediumZoom('img', {
-                  margin: 24,
-                  background: '#000000e6',
-                  scrollOffset: 0,
-              });
-          });
-      </script>
     </body>
-  </html>
+</html>
