@@ -105,5 +105,17 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         );
       });
     </script>
+
+    // 페이지 로드 후 이미지에 줌 기능 적용
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mediumZoom('img', {
+                margin: 24,
+                background: '#000000e6',
+                scrollOffset: 0,
+            });
+        });
+    </script>
   </body>
 </html>
