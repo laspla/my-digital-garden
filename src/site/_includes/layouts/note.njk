@@ -99,16 +99,20 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
       <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
       <script>
         document.addEventListener("DOMContentLoaded", function() {
-          // 1. 색깔 텍스트 문법 적용 (~={색깔}내용=~)
-          // 주의: 이 작업이 body를 재생성하므로 가장 먼저 실행되어야 합니다.
-          document.body.innerHTML = document.body.innerHTML.replace(
-            /~=\{(.*?)\}(.*?)=~/g, 
-            '<span style="color: $1; ">$2</span>'
-          );
+          // 1. 색깔 텍스트 적용 (~={색깔}내용=~)
+          // body 전체가 아니라, 글 내용이 들어있는 '.content' 영역만 수정합니다.
+          const contentArea = document.querySelector('.content');
+          
+          if (contentArea) {
+            contentArea.innerHTML = contentArea.innerHTML.replace(
+              /~=\{(.*?)\}(.*?)=~/g, 
+              '<span style="color: $1; ">$2</span>'
+            );
+          }
 
           // 2. 이미지 줌 기능 적용
-          // 위에서 화면이 다 그려진 뒤에 실행되어야 안전합니다.
-          mediumZoom('img', {
+          // 색깔 코드가 적용된 후(이미지가 다시 그려진 후)에 줌 기능을 입힙니다.
+          mediumZoom('.content img', {
             margin: 24,
             background: '#000000e6',
             scrollOffset: 0,
