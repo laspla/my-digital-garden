@@ -98,11 +98,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
 
       <style>
         .content img {
-          cursor: zoom-in; /* 커서 모양 변경 */
-        }
-        /* 줌 되었을 때 이미지가 다른 요소보다 위에 오도록 설정 */
-        .medium-zoom-overlay, .medium-zoom-image--opened {
-          z-index: 9999;
+          cursor: zoom-in;
         }
       </style>
 
@@ -110,27 +106,13 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
       
       <script>
         document.addEventListener("DOMContentLoaded", function() {
-          const contentArea = document.querySelector('.content');
-          
-          // [단계 1] 색깔 텍스트 변환 (~={색깔}내용=~)
-          // 이 작업이 HTML을 다시 쓰기 때문에 무조건 가장 먼저 해야 합니다.
-          if (contentArea) {
-            contentArea.innerHTML = contentArea.innerHTML.replace(
-              /~=\{(.*?)\}(.*?)=~/g, 
-              '<span style="color: $1; ">$2</span>'
-            );
-          }
-
-          // [단계 2] 줌 기능 적용 (0.1초 딜레이)
-          // 화면이 확실히 다 그려진 뒤에 줌 기능을 입히도록 찰나의 시간을 줍니다.
-          setTimeout(function() {
+            // 충돌 원인이 되는 색깔 코드는 제거하고 줌 기능만 실행
             mediumZoom('.content img', {
-              margin: 24,
-              background: '#000000e6',
-              scrollOffset: 0,
+                margin: 24,
+                background: '#000000e6',
+                scrollOffset: 0,
             });
-            console.log("Zoom function applied!"); // 개발자 도구 콘솔에서 확인용
-          }, 100);
+            console.log("이미지 줌 기능이 실행되었습니다.");
         });
       </script>
     </body>
