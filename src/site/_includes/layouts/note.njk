@@ -96,23 +96,13 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
       {%include "components/canvasScript.njk"%}
     {% endif %}
 
-      <style>
-        .content img {
-          cursor: zoom-in;
-        }
-      </style>
-
-      <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
-      
       <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 충돌 원인이 되는 색깔 코드는 제거하고 줌 기능만 실행
-            mediumZoom('.content img', {
-                margin: 24,
-                background: '#000000e6',
-                scrollOffset: 0,
-            });
-            console.log("이미지 줌 기능이 실행되었습니다.");
+          // 페이지 전체에서 ~={색깔}내용=~ 패턴을 찾습니다.
+          document.body.innerHTML = document.body.innerHTML.replace(
+            /~=\{(.*?)\}(.*?)=~/g, 
+            '<span style="color: $1; ">$2</span>'
+          );
         });
       </script>
     </body>
