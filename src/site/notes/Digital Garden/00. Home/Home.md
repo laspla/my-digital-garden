@@ -2,14 +2,16 @@
 {"dg-publish":true,"permalink":"/digital-garden/00-home/home/","tags":["gardenEntry"],"noteIcon":""}
 ---
 
+# 미도대성공인중개사사무소
+
 > [!grid]
 > ![Home-3.webp](/img/user/Attachments/Home-3.webp)
 > ![Home-2.webp](/img/user/Attachments/Home-2.webp)
 
 
-# 궁금하신 사항은 🔎검색창이나 ⬅️좌측탭에서 찾아주세요.
+*궁금하신 사항은 🔎검색창이나 ⬅️좌측탭에서 찾아주세요.*
  
-그 외에도 **미도대성공인중개사사무소**로 연락주시면 자세한 상담 가능합니다.
+*그 외에도 **미도대성공인중개사사무소**로 연락주시면 자세한 상담 가능합니다.*
 
 **🏠상호:**
 - 미도대성공인중개사사무소 (등록번호: 9251-6865)
