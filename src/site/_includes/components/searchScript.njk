@@ -214,7 +214,7 @@
             : '';
 
         previewContent.innerHTML = `
-            <div class="preview-title">${highlightTerms(result.title, window.searchTerms)}</div>
+            <div class="preview-title">${highlightTerms(result.title.replace('미도대성 - ', ''), window.searchTerms)}</div>
             ${tagsHTML}
             <div class="preview-body">${htmlContent}</div>
         `;
@@ -396,7 +396,8 @@
         results.forEach((r, index) => {
             const excerpt = getContextualExcerpt(r.content, window.searchTerms, 120);
             const highlightedExcerpt = highlightTerms(excerpt, window.searchTerms);
-            const highlightedTitle = highlightTerms(r.title, window.searchTerms);
+            // 제목에서 '미도대성 - '을 먼저 지우고 나서 하이라이트 처리를 합니다.
+            const highlightedTitle = highlightTerms(r.title.replace('미도대성 - ', ''), window.searchTerms);
 
             const tagsHTML = r.tags && r.tags.length > 0
                 ? `<div class="result-tags">${r.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}</div>`
