@@ -456,13 +456,13 @@
             ...getByField("tags")
         ]);
 
-        const dataIds = [...allIds];
         const finalResults = dataIds.map((id) => {
             const result = { ...data[id] };
             result.tags = result.tags.filter((x) => x !== "gardenEntry" && x !== "note");
             return result;
         });
 
-        return finalResults;
+        // 제목이 'Home'이거나 주소가 '/'인 것은 결과에서 제외하고 반환
+        return finalResults.filter(item => item.title !== 'Home' && item.url !== '/');
     }
 </script>
