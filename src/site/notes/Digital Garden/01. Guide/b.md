@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/digital-garden/01-guide/b/","title":"법무부 전자공증시스템","noteIcon":""}
+{"dg-publish":true,"permalink":"/digital-garden/01-guide/b/","title":"aa","noteIcon":""}
 ---
 
 # 법무부 전자공증시스템 
