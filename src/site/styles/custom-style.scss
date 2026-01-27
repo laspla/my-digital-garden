@@ -80,3 +80,19 @@ img {
     display: none !important;
 }
 
+/* 사이드바 슬라이드 애니메이션 */
+.sidebar-transition {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* 닫혀있을 때 (왼쪽으로 숨김) */
+.sidebar-closed {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* 열려있을 때 (제자리) */
+.sidebar-open {
+    transform: translateX(0);
+    opacity: 1;
+}
