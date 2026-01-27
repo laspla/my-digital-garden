@@ -456,13 +456,21 @@
             ...getByField("tags")
         ]);
 
+        // [수정 1] 누락되었던 dataIds 변수 선언 추가
+        const dataIds = [...allIds];
+
         const finalResults = dataIds.map((id) => {
             const result = { ...data[id] };
-            result.tags = result.tags.filter((x) => x !== "gardenEntry" && x !== "note");
+            if (result.tags) {
+                result.tags = result.tags.filter((x) => x !== "gardenEntry" && x !== "note");
+            }
             return result;
         });
 
-        // 제목이 'Home'이거나 주소가 '/'인 것은 결과에서 제외하고 반환
-        return finalResults.filter(item => item.title !== 'Home' && item.url !== '/');
+        // [수정 2] 'Home' 뿐만 아니라 'Digital Garden' 제목과 최상단 주소('/')까지 모두 제외
+        return finalResults.filter(item => {
+            const title = (item.title || "").trim();
+            return title !== 'Home' && title !== 'Digital Garden' && item.url !== '/';
+        });
     }
 </script>
