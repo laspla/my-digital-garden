@@ -27,12 +27,6 @@
         <h1>{{ noteTitle  }}</h1>
       {% endif %}
 
-      {% if page.date %}
-        <p style="color: gray; font-size: 0.9em; margin-top: -10px;">
-          📅 작성일: {{ page.date | koreaDate }}
-        </p>
-      {% endif %}
-
       <div class="header-meta">
         {% if settings.dgShowTags === true and tags %}
           <div class="header-tags">
