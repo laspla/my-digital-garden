@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/digital-garden/00-home/home/","tags":["gardenEntry"],"noteIcon":""}
+{"dg-publish":true,"permalink":"/digital-garden/00-home/home/","title":"Home","tags":["gardenEntry"],"noteIcon":""}
 ---
 
 # 미도대성공인중개사사무소 
