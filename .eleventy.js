@@ -97,6 +97,18 @@ function getAnchorAttributes(filePath, linkTitle) {
 const tagRegex = /(^|\s|\>)(#[^\s!@#$%^&*()=+\.,\[{\]};:'"?><]+)(?!([^<]*>))/g;
 
 module.exports = function (eleventyConfig) {
+  /* 한국 시간 날짜 필터 추가 */
+  eleventyConfig.addFilter("koreaDate", (dateObj) => {
+    if (!dateObj) return "";
+    // 한국 시간(KST) 기준, 원하는 포맷으로 변환
+    return new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'short',
+      timeZone: 'Asia/Seoul',
+    }).format(new Date(dateObj));
+  });
   eleventyConfig.setLiquidOptions({
     dynamicPartials: true,
   });
