@@ -32,6 +32,11 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
         {% if settings.dgShowInlineTitle === true %}
           <h1 data-note-icon="{% if noteIcon %}{{noteIcon}}{% else %}{{meta.noteIconsSettings.default}}{% endif %}">{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</h1>
         {% endif %}
+        {% if date %}
+          <p style="color: gray; font-size: 0.9em; margin-top: -10px;">
+            📅 작성일: {{ date }}
+          </p>
+        {% endif %}
         <div class="header-meta">
           {% if settings.dgShowTags === true and tags %}
             <div class="header-tags">
