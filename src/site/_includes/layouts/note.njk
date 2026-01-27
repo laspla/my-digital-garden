@@ -49,9 +49,12 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
             {%- if meta.timestampSettings.showCreated and created -%}
             <div><i data-lucide="calendar-clock"></i> {{ updated | koreaDate }}</div>
             {%- endif -%}
-            {%- if meta.timestampSettings.showUpdated and updated -%}
-            <div><i data-lucide="calendar-clock"></i> <span class="human-date" data-date="{{updated}}"></span></div>
-            {%- endif -%}
+          {%- if meta.timestampSettings.showUpdated and (edited or updated) -%}
+            <div>
+              <i data-lucide="calendar-clock"></i> 
+              {{ (edited or updated) | koreaDate }}
+            </div>
+          {%- endif -%}
           </div>
           {%- endif -%}
         </div>
