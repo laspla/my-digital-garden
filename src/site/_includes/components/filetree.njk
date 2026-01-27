@@ -33,7 +33,16 @@
         
         <div x-show="showFilesMobile && !isDesktop" @click="showFilesMobile = false" style="display:none;" class="fullpage-overlay"></div>
 
-      <div class="filetree-wrapper" x-show.important="isDesktop || showFilesMobile" style="display: none;">
+        <div class="filetree-wrapper" 
+             x-show.important="isDesktop || showFilesMobile" 
+             style="display: none;"
+             x-transition:enter="sidebar-transition"
+             x-transition:enter-start="sidebar-closed"
+             x-transition:enter-end="sidebar-open"
+             x-transition:leave="sidebar-transition"
+             x-transition:leave-start="sidebar-open"
+             x-transition:leave-end="sidebar-closed"
+        >
       <nav class="filetree-sidebar">
         {% for imp in dynamics.filetree.beforeTitle %}
             {% include imp %}
