@@ -242,15 +242,20 @@
     }
 
     // ===== FlexSearch Index =====
-
+    
     function createIndex(posts) {
-        const encoder = (str) => str.toLowerCase().split(/([^a-z]|[^\x00-\x7F])/);
+        // [수정 1] 인코더 변경: 한글을 인식하지 못하는 기존 정규식을 제거하고, 
+        // 띄어쓰기(공백) 기준으로 단어를 자르도록 수정했습니다.
+        const encoder = (str) => str.toLowerCase().split(/[\s\n\r\t.,;:?!]+/);
+
         const contentIndex = new FlexSearch.Document({
             cache: true,
             charset: "latin:extra",
             optimize: true,
             index: [
-                { field: "content", tokenize: "reverse", encode: encoder },
+                // [수정 2] tokenize 변경: 'reverse'(뒤에서 매칭)를 'forward'(앞에서 매칭)로 변경
+                // 이렇게 해야 검색어가 단어의 앞부분과 일치할 때만 검색됩니다.
+                { field: "content", tokenize: "forward", encode: encoder },
                 { field: "title", tokenize: "forward", encode: encoder },
                 { field: "tags", tokenize: "forward", encode: encoder }
             ]
