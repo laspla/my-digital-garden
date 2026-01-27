@@ -46,15 +46,19 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           {% endif %}
           {%- if meta.timestampSettings.showCreated or meta.timestampSettings.showUpdated -%}
           <div class="timestamps">
-            {%- if meta.timestampSettings.showCreated and created -%}
-            <div><i data-lucide="calendar-clock"></i> {{ updated | koreaDate }}</div>
+            {%- if meta.timestampSettings.showCreated and (published or created) -%}
+            <div>
+              <i data-lucide="calendar-plus"></i> 
+              {{ (published or created) | koreaDate }}
+            </div>
             {%- endif -%}
-          {%- if meta.timestampSettings.showUpdated and (edited or updated) -%}
+            
+            {%- if meta.timestampSettings.showUpdated and (edited or updated) -%}
             <div>
               <i data-lucide="calendar-clock"></i> 
               {{ (edited or updated) | koreaDate }}
             </div>
-          {%- endif -%}
+            {%- endif -%}
           </div>
           {%- endif -%}
         </div>
