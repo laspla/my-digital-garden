@@ -97,17 +97,24 @@ function getAnchorAttributes(filePath, linkTitle) {
 const tagRegex = /(^|\s|\>)(#[^\s!@#$%^&*()=+\.,\[{\]};:'"?><]+)(?!([^<]*>))/g;
 
 module.exports = function (eleventyConfig) {
-  /* 한국 시간 날짜 필터 추가 */
+  /* 한국 시간 날짜 필터 (괄호 추가됨) */
   eleventyConfig.addFilter("koreaDate", (dateObj) => {
     if (!dateObj) return "";
-    // 한국 시간(KST) 기준, 원하는 포맷으로 변환
-    return new Intl.DateTimeFormat('ko-KR', {
+    const date = new Date(dateObj);
+    // 1. 날짜 부분만 만들기 (예: 2026년 1월 27일)
+    const datePart = new Intl.DateTimeFormat('ko-KR', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'Asia/Seoul',
+    }).format(date);
+    // 2. 요일 부분만 따로 만들기 (예: 화)
+    const weekdayPart = new Intl.DateTimeFormat('ko-KR', {
       weekday: 'short',
       timeZone: 'Asia/Seoul',
-    }).format(new Date(dateObj));
+    }).format(date);
+    // 3. 예쁘게 합치기 -> "2026년 1월 27일 (화)"
+    return `${datePart} (${weekdayPart})`; 
   });
   eleventyConfig.setLiquidOptions({
     dynamicPartials: true,
