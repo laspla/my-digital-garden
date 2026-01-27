@@ -97,25 +97,6 @@ function getAnchorAttributes(filePath, linkTitle) {
 const tagRegex = /(^|\s|\>)(#[^\s!@#$%^&*()=+\.,\[{\]};:'"?><]+)(?!([^<]*>))/g;
 
 module.exports = function (eleventyConfig) {
-  /* 한국 시간 날짜 필터 (괄호 추가됨) */
-  eleventyConfig.addFilter("koreaDate", (dateObj) => {
-    if (!dateObj) return "";
-    const date = new Date(dateObj);
-    // 1. 날짜 부분만 만들기 (예: 2026년 1월 27일)
-    const datePart = new Intl.DateTimeFormat('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timeZone: 'Asia/Seoul',
-    }).format(date);
-    // 2. 요일 부분만 따로 만들기 (예: 화)
-    const weekdayPart = new Intl.DateTimeFormat('ko-KR', {
-      weekday: 'short',
-      timeZone: 'Asia/Seoul',
-    }).format(date);
-    // 3. 예쁘게 합치기 -> "2026년 1월 27일 (화)"
-    return `${datePart} (${weekdayPart})`; 
-  });
   eleventyConfig.setLiquidOptions({
     dynamicPartials: true,
   });
@@ -292,6 +273,18 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.setLibrary("md", markdownLib);
 
+  /* 한국 날짜 포맷 필터 추가 */
+  eleventyConfig.addFilter("koreaDate", function (date) {
+    if (!date) return "";
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const weekNames = ["일", "월", "화", "수", "목", "금", "토"];
+    const weekday = weekNames[d.getDay()];
+    return `${year}년 ${month}월 ${day}일 (${weekday})`;
+  });
+  
   eleventyConfig.addFilter("isoDate", function (date) {
     return date && date.toISOString();
   });
