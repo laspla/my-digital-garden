@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"dg-permalink":"/home/","permalink":"/home/","title":"Home","tags":["gardenEntry"],"noteIcon":""}
+{"dg-publish":true,"dg-permalink":"/home/","permalink":"/home/","title":"미도대성","tags":["gardenEntry"],"noteIcon":""}
 ---
 
 # 미도대성공인중개사사무소
