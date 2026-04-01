@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/digital-garden/home/","title":"미도대성","hide":"true","tags":["gardenEntry"],"noteIcon":""}
+{"dg-publish":true,"permalink":"/digital-garden/home/","title":"미도대성","hide":"true","tags":["gardenEntry"],"noteIcon":"","dg-note-properties":{"title":"미도대성","cssclasses":["img-grid"]}}
 ---
 
 # 미도대성공인중개사사무소 
