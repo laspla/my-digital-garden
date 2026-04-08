@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ meta.mainLanguage }}">
   <head>
-    <meta charset="UTF-8">
     <title>{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</title>
     {%include "components/pageheader.njk"%}
     {% for imp in dynamics.common.head %}
@@ -21,10 +20,10 @@
     {% if settings.dgEnableSearch === true %}
       {%include "components/searchContainer.njk"%}
     {% endif %}
-    <main class="content cm-s-obsidian {{contentClasses}}">
+    <main class="content cm-s-obsidian print {{contentClasses}}">
       <header>
       {% if settings.dgShowInlineTitle === true %}
-        <h1>{{ noteTitle  }}</h1>
+        <h1>{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</h1>
       {% endif %}
 
       <div class="header-meta">
@@ -62,7 +61,7 @@
       {% endfor %}
     </main>
 
-    {% if settings.dgShowBacklinks === true or settings.dgShowLocalGraph === true or settings.dgShowToc === true%}
+    {% if settings.dgShowBacklinks === true or settings.dgShowLocalGraph === true or settings.dgShowToc === true or dynamics.sidebar.top.length > 0 or dynamics.sidebar.bottom.length > 0%}
       {%include "components/sidebar.njk" %}
     {%endif%}
 
@@ -76,15 +75,6 @@
       {% include imp %}
     {% endfor %}
     {%include "components/lucideIcons.njk"%}
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          // 페이지 전체에서 ~={색깔}내용=~ 패턴을 찾습니다.
-          document.body.innerHTML = document.body.innerHTML.replace(
-            /~=\{(.*?)\}(.*?)=~/g, 
-            '<span style="color: $1; ">$2</span>'
-          );
-        });
-      </script>
+    {%include "components/basesScript.njk"%}
     </body>
-</html>
+  </html>
