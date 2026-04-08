@@ -4,7 +4,6 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
 <!DOCTYPE html>
 <html lang="{{ meta.mainLanguage }}">
   <head>
-    <meta charset="UTF-8">
     <title>{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</title>
     {%include "components/pageheader.njk"%}
     {% for imp in dynamics.common.head %}
@@ -27,7 +26,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
       {%include "components/searchContainer.njk"%}
     {% endif %}
 
-    <main class="content cm-s-obsidian {{contentClasses}}">
+    <main class="content cm-s-obsidian print {{contentClasses}}">
       <header>
         {% if settings.dgShowInlineTitle === true %}
           <h1 data-note-icon="{% if noteIcon %}{{noteIcon}}{% else %}{{meta.noteIconsSettings.default}}{% endif %}">{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</h1>
@@ -46,18 +45,11 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
           {% endif %}
           {%- if meta.timestampSettings.showCreated or meta.timestampSettings.showUpdated -%}
           <div class="timestamps">
-            {%- if meta.timestampSettings.showCreated and (published or created) -%}
-            <div>
-              <i data-lucide="calendar-plus"></i> 
-              {{ (published or created) | koreaDate }}
-            </div>
+            {%- if meta.timestampSettings.showCreated and created -%}
+            <div><i data-lucide="calendar-plus"></i> <span class="human-date" data-date="{{created}}"></span></div>
             {%- endif -%}
-            
-            {%- if meta.timestampSettings.showUpdated and (edited or updated) -%}
-            <div>
-              <i data-lucide="calendar-clock"></i> 
-              {{ (edited or updated) | koreaDate }}
-            </div>
+            {%- if meta.timestampSettings.showUpdated and updated -%}
+            <div><i data-lucide="calendar-clock"></i> <span class="human-date" data-date="{{updated}}"></span></div>
             {%- endif -%}
           </div>
           {%- endif -%}
@@ -84,7 +76,7 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
       {% endfor %}
     </main>
 
-    {% if settings.dgShowBacklinks === true or settings.dgShowLocalGraph === true or settings.dgShowToc === true%}
+    {% if settings.dgShowBacklinks === true or settings.dgShowLocalGraph === true or settings.dgShowToc === true or dynamics.sidebar.top.length > 0 or dynamics.sidebar.bottom.length > 0%}
       {%include "components/sidebar.njk"%}
     {% endif %}
 
@@ -103,15 +95,6 @@ permalink: "notes/{{ page.fileSlug | slugify }}/"
     {% if contentClasses and "canvas-page" in contentClasses %}
       {%include "components/canvasScript.njk"%}
     {% endif %}
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          // 페이지 전체에서 ~={색깔}내용=~ 패턴을 찾습니다.
-          document.body.innerHTML = document.body.innerHTML.replace(
-            /~=\{(.*?)\}(.*?)=~/g, 
-            '<span style="color: $1; ">$2</span>'
-          );
-        });
-      </script>
-    </body>
+    {% include "components/basesScript.njk" %}
+  </body>
 </html>
