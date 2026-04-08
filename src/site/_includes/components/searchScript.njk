@@ -63,7 +63,7 @@
 
     function setCorrectShortcut() {
         if (navigator.platform.toUpperCase().indexOf('MAC') >= 0) {
-            document.querySelectorAll(".search-keys").forEach(x => x.innerHTML = "⌘K");
+            document.querySelectorAll(".search-keys").forEach(x => x.innerHTML = "<code>⌘</code>&nbsp;+&nbsp;<code>K</code>");
         }
     }
 
@@ -214,7 +214,7 @@
             : '';
 
         previewContent.innerHTML = `
-            <div class="preview-title">${highlightTerms(result.title.replace('미도대성 - ', ''), window.searchTerms)}</div>
+            <div class="preview-title">${highlightTerms(result.title, window.searchTerms)}</div>
             ${tagsHTML}
             <div class="preview-body">${htmlContent}</div>
         `;
@@ -242,20 +242,27 @@
     }
 
     // ===== FlexSearch Index =====
-    
-    function createIndex(posts) {
-        // [수정 1] 인코더 변경: 한글을 인식하지 못하는 기존 정규식을 제거하고, 
-        // 띄어쓰기(공백) 기준으로 단어를 자르도록 수정했습니다.
-        const encoder = (str) => str.toLowerCase().split(/[\s\n\r\t.,;:?!]+/);
 
+    function createIndex(posts) {
+        const normalizeForSearch = (str) => str
+            .toLowerCase()
+            // á -> a +  ́
+            .normalize("NFD")
+            // n~ -> ñ
+            .replace(/n\u0303/g, "ñ")
+            // áéíóúü -> aeiouu
+            .replace(/[\u0300-\u036f]/g, "")
+            // Recompose Unicode
+            .normalize("NFC");
+
+        const encoder = (str) => normalizeForSearch(str)
+            .split(/([^a-z]|[^\x00-\x7F])/);
         const contentIndex = new FlexSearch.Document({
             cache: true,
             charset: "latin:extra",
             optimize: true,
             index: [
-                // [수정 2] tokenize 변경: 'reverse'(뒤에서 매칭)를 'forward'(앞에서 매칭)로 변경
-                // 이렇게 해야 검색어가 단어의 앞부분과 일치할 때만 검색됩니다.
-                { field: "content", tokenize: "forward", encode: encoder },
+                { field: "content", tokenize: "reverse", encode: encoder },
                 { field: "title", tokenize: "forward", encode: encoder },
                 { field: "tags", tokenize: "forward", encode: encoder }
             ]
@@ -363,12 +370,11 @@
         const searchLayout = document.getElementById('search-layout');
 
         if (!searchQuery) {
-            resultsDiv.innerHTML = '';
+            resultsDiv.innerHTML = `<span><i>{{ meta.uiStrings.searchNotStarted }}</i></span>`;
             hidePreview();
             if (searchLayout) searchLayout.classList.add('no-preview');
             return;
         }
-        if (searchQuery === lastSearch) return;
 
         window.lastSearch = searchQuery;
         window.searchTerms = tokenizeSearchTerms(searchQuery);
@@ -401,8 +407,7 @@
         results.forEach((r, index) => {
             const excerpt = getContextualExcerpt(r.content, window.searchTerms, 120);
             const highlightedExcerpt = highlightTerms(excerpt, window.searchTerms);
-            // 제목에서 '미도대성 - '을 먼저 지우고 나서 하이라이트 처리를 합니다.
-            const highlightedTitle = highlightTerms(r.title.replace('미도대성 - ', ''), window.searchTerms);
+            const highlightedTitle = highlightTerms(r.title, window.searchTerms);
 
             const tagsHTML = r.tags && r.tags.length > 0
                 ? `<div class="result-tags">${r.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}</div>`
@@ -461,21 +466,13 @@
             ...getByField("tags")
         ]);
 
-        // [수정 1] 누락되었던 dataIds 변수 선언 추가
         const dataIds = [...allIds];
-
         const finalResults = dataIds.map((id) => {
             const result = { ...data[id] };
-            if (result.tags) {
-                result.tags = result.tags.filter((x) => x !== "gardenEntry" && x !== "note");
-            }
+            result.tags = result.tags.filter((x) => x !== "gardenEntry" && x !== "note");
             return result;
         });
 
-        // [수정 2] 'Home' 뿐만 아니라 'Digital Garden' 제목과 최상단 주소('/')까지 모두 제외
-        return finalResults.filter(item => {
-            const title = (item.title || "").trim();
-            return title !== 'Home' && title !== 'Digital Garden' && item.url !== '/';
-        });
+        return finalResults;
     }
 </script>
